@@ -5,16 +5,11 @@ from collections import deque
 class BFS(object):    
                     
     @staticmethod
-    def dfs():
-        
-        tableroInicial=[['10','7 ','3 ','6 '],['14','13','4 ','11'],['X ','1 ','9 ','8 '],['2 ','15','12','5 ']]
-        tableroFinal = [['1 ','2 ','3 ','4 '],['5 ','6 ','7 ','8 '],['9 ','10','11','12'],['13','14','15','X ']]    
-                                
-        agenda = deque([Puzzle.Puzzle(tableroInicial,None,2,0,"inicial")])        
+    def bfs(tableroInicial,tableroFinal):                                            
+        agenda = deque([Puzzle.Puzzle(tableroInicial,None,1,2,"inicial")])        
         expandido = agenda.popleft()    
         expansion = Puzzle.Puzzle.returnMoves(expandido)
-        nodosExpandidos = {str(expandido.value):expandido}
-        print("hijos")
+        nodosExpandidos = {str(expandido.value):expandido}        
         for hijo in expansion:
             agenda.append(hijo)                            
             print(hijo.value)  
@@ -25,13 +20,12 @@ class BFS(object):
             if not nodosExpandidos.__contains__(str(expandido.value)):                
                 expansion = Puzzle.Puzzle.returnMoves(expandido)
                 nodosExpandidos[str(expandido.value)] = expandido                
-                print("hijos")
+               
                 for hijo in expansion:
                     agenda.append(hijo)                    
-                    print(hijo.value)                      
+                                      
             
-            """else:                
-                break""" 
+            
         print("terminado por BFS esta es la respuesta:")  
         
         resultado = [Puzzle.Puzzle(tableroFinal,expandido,3,3,"Final?"),expandido] 
@@ -42,19 +36,20 @@ class BFS(object):
             resultado.append(parcial)
             parcial =parcial.padre            
             
+        resultado.append(parcial)
+        
         resultado.reverse()
        
-        for tablerin in resultado:
-           
-            pass
-            #print (tablerin)
+        Puzzle.Puzzle.animaResultado(resultado, tableroInicial)
+        
             
         print("numero de movimientos:"+str(resultado.__len__()))    
                 
                  
     
-            
+tableroInicial=[['1 ','2 ','7 ','3 '],['5 ','6 ','X ','4 '],['9 ','10','11','8 '],['13','14','15','12']]
+tableroFinal = [['1 ','2 ','3 ','4 '],['5 ','6 ','7 ','8 '],['9 ','10','11','12'],['13','14','15','X ']]            
           
 
-BFS.dfs()
+BFS.bfs(tableroInicial,tableroFinal)
     
